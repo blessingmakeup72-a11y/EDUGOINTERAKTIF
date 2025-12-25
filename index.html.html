@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EDUGO - Platform Pembelajaran Interaktif</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      box-sizing: border-box;
+    }
+
+    .main-wrapper {
+      min-height: 100%;
+      width: 100%;
+      overflow: auto;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(120,119,198,.3), transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255,118,117,.3), transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255,209,102,.2), transparent 50%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .screen { display: none; }
+    .screen.active { display: block; animation: fade .4s ease; }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .course-card { transition: .3s; }
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,.15);
+    }
+
+    .quiz-option.correct { background:#10b981; color:#fff; }
+    .quiz-option.incorrect { background:#ef4444; color:#fff; }
+  </style>
+</head>
+
+<body>
+<div class="main-wrapper bg-gradient-to-br from-indigo-500 to-purple-600">
+  <div class="max-w-6xl mx-auto p-6 relative z-10">
+
+    <!-- WELCOME -->
+    <div id="welcomeScreen" class="screen active text-center">
+      <div class="bg-white p-10 rounded-3xl shadow-xl max-w-xl mx-auto">
+        <h1 class="text-5xl font-bold text-indigo-600 mb-3">EDUGO</h1>
+        <p class="text-gray-600 text-xl mb-8">Platform Pembelajaran Interaktif</p>
+
+        <button id="loginBtn"
+          class="bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-indigo-700">
+          Masuk
+        </button>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboardScreen" class="screen">
+      <div class="bg-white rounded-3xl shadow-xl p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-3xl font-bold">Dashboard</h2>
+          <button id="logoutBtn"
+            class="bg-red-500 text-white px-4 py-2 rounded-full">
+            Keluar
+          </button>
+        </div>
+
+        <div id="coursesContainer"
+          class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+      </div>
+    </div>
+
+    <!-- DETAIL -->
+    <div id="courseDetailScreen" class="screen">
+      <div class="bg-white rounded-3xl shadow-xl p-6">
+        <button id="backToDashboard" class="mb-4 text-indigo-600">← Kembali</button>
+        <div id="courseDetailContent"></div>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="quizScreen" class="screen">
+      <div class="bg-white rounded-3xl shadow-xl p-6 max-w-2xl mx-au
